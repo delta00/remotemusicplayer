@@ -424,7 +424,7 @@ public class MusicLibrary {
 	 * 
 	 * 	<pre>
 	 * 		{@code
-	 * 			<musicLibrary>
+	 * 			<musicLibrary version="9201873486367996336">
 	 * 				<artist name="Fear Factory">
 	 * 					<album name="Demanufacture" year="1995">
 	 * 						<song name="Demanufacture" track="01" path="/home/user/Music/Demanufacture.mp3">
