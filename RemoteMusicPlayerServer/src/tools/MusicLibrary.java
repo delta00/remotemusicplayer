@@ -43,7 +43,7 @@ import org.w3c.dom.Element;
  * 					<li>If you want to, use method <b>serialize()</b> to store the result somewhere.</li>
  * 					<li>If you want to, use method <b>getTransmittableData()</b> for sending data over the network.</li>
  * 				</ol>
- * 			<li><h2>Second time: update of the library.</h2></li>
+ * 			<li><h2>Second time: update of the library (not supported yet).</h2></li>
  * 		</ul>
  * </p>
  * 
@@ -563,5 +563,14 @@ public class MusicLibrary {
 	 */
 	public long getVersionNumber() {
 		return version;
+	}
+
+	/**
+	 * Resets all internal values to its defaults. 
+	 */
+	public void clear() {
+		this.artists		= new ArrayList<>();
+		this.xmlDocument	= null;
+		this.version		= 0;
 	}
 }
