@@ -3,11 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/jid3lib-0.5.4.jar"/>
-	<classpathentry kind="lib" path="lib/JLayer1.0.1/jl1.0.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="file:/home/tom/Programming/RemoteMusicPlayerServer/lib/JLayer1.0.1/doc/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/java-audio-player-v.0.1.1.2/JavaMediaPlayer.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="file:/home/tom/Programming/RemoteMusicPlayerServer/lib/java-audio-player-v.0.1.1.2/docs/"/>
