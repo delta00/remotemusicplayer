@@ -84,7 +84,7 @@ import java.util.regex.Pattern;
  * 	</p>
  * </p>
  * 
- * @author	Tomáš Zíma
+ * @author	Tom���� Z��ma
  * @see		ConnectionListener
  * @see		ConnectionHandler
  * @see		ConnectionDescriptor
@@ -134,7 +134,7 @@ public class Communicator {
 	 * is used for communication, was described in the Javadoc for class
 	 * {@link Communicator} as well as some other details.
 	 * 
-	 * @author Tomáš Zíma
+	 * @author Tom���� Z��ma
 	 */
 	protected class ConnectionHandler {
 		/** Socket between server and client. */
@@ -230,6 +230,10 @@ public class Communicator {
 						else
 						if (command.matches("^STOP$")) {
 							sendReply(connectionListener.stop());
+						}
+						else
+						if (command.matches("^UNPAUSE$")) {
+							sendReply(connectionListener.unpause());
 						}
 						else
 						if (command.matches("^PLAY \".*\"$")) {

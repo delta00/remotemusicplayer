@@ -5,11 +5,6 @@ import java.io.IOException;
 import application.controller.Controller;
 import application.controller.ControllerErrorListener;
 
-import tools.communicator.Communicator;
-import tools.communicator.ConnectionDescriptor;
-import tools.communicator.ConnectionListener;
-import tools.communicator.PlayerState;
-
 public class Main {
 	public static void main(String[] args) throws Exception {
 		final Controller controller = new Controller();

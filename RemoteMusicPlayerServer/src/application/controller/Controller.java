@@ -1,7 +1,14 @@
 package application.controller;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Hashtable;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import maryb.player.Player;
 
 import tools.MusicLibrary;
 import tools.communicator.Communicator;
@@ -12,9 +19,12 @@ import tools.communicator.PlayerState;
 public class Controller implements ConnectionListener {
 	private Communicator							communicator		= new Communicator(9999);
 	private MusicLibrary							musicLibrary		= new MusicLibrary();
+	private Player									player				= new Player();
 	private ControllerErrorListener					errorListener		= null;
 	private ConnectionDescriptor					activeConnection	= null;
 	private Hashtable<ConnectionDescriptor, User>	users				= new Hashtable<>();
+	
+	private String									pathMusicLibrary	= "MusicLibrary.xml";
 	
 	public void run() {
 		communicator.setConnectionListener(this);
@@ -61,14 +71,18 @@ public class Controller implements ConnectionListener {
 
 	@Override
 	public void close() {
-		//
+		users.remove(activeConnection);
 	}
 
 	@Override
 	public boolean checkVersion(long version) {
 		if (getCurrentUser() != null && getCurrentUser().hasPermissionCheckVersion()) {
-			// TODO: checkVersion
-			return true;
+			try {
+				return (MusicLibrary.fastLoadID(pathMusicLibrary) == version);
+			}
+			catch (ParserConfigurationException | IOException | SAXException e) {
+				return false;
+			}
 		}
 		
 		return false;
@@ -77,8 +91,12 @@ public class Controller implements ConnectionListener {
 	@Override
 	public String update() {
 		if (getCurrentUser() != null && getCurrentUser().hasPermissionUpdate()) {
-			// TODO: update
-			return "<musicLibrary></musicLibrary>";
+			try {
+				return MusicLibrary.fastLoadContent(pathMusicLibrary);
+			}
+			catch (IOException e) {
+				return null;
+			}
 		}
 		
 		return null;
@@ -97,7 +115,8 @@ public class Controller implements ConnectionListener {
 	@Override
 	public boolean play(String filename) {
 		if (getCurrentUser() != null && getCurrentUser().hasPermissionPlay()) {
-			// TODO: play
+			player.setSourceLocation(filename);
+			player.play();
 			return true;
 		}
 		
@@ -107,8 +126,19 @@ public class Controller implements ConnectionListener {
 	@Override
 	public boolean pause() {
 		if (getCurrentUser() != null && getCurrentUser().hasPermissionPause()) {
-			// TODO: pause
+			player.pause();
 			return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public boolean unpause() {
+		if (getCurrentUser() != null && getCurrentUser().hasPermissionUnpause()) {
+			if (player != null) {
+				player.play();
+			}
 		}
 		
 		return false;
@@ -117,7 +147,7 @@ public class Controller implements ConnectionListener {
 	@Override
 	public boolean stop() {
 		if (getCurrentUser() != null && getCurrentUser().hasPermissionStop()) {
-			// TODO: stop
+			player.stop();
 			return true;
 		}
 		

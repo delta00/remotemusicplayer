@@ -6,10 +6,11 @@ public class User {
 	private boolean	update			= true;
 	private boolean	getState		= true;
 	private boolean	pause			= true;
+	private boolean unpause			= true;
 	private boolean	stop			= true;
 	private boolean	play			= true;
 	
-	public User(boolean authenticate, boolean checkVersion, boolean update, boolean getState, boolean pause, boolean stop, boolean play) {
+	public User(boolean authenticate, boolean checkVersion, boolean update, boolean getState, boolean pause, boolean stop, boolean play, boolean unpause) {
 		this.authenticate	= authenticate;
 		this.checkVersion 	= checkVersion;
 		this.update			= update;
@@ -58,5 +59,9 @@ public class User {
 
 	public boolean hasPermissionPlay() {
 		return play;
+	}
+	
+	public boolean hasPermissionUnpause() {
+		return unpause;
 	}
 }

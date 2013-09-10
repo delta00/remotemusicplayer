@@ -10,7 +10,7 @@ package tools.communicator;
  * 	generated the command.
  * </p>
  * 
- * @author Tomáš Zíma
+ * @author Tom���� Z��ma
  */
 public interface ConnectionListener {
 	public void			setActiveConnection(ConnectionDescriptor connectionDescriptor);
@@ -21,6 +21,7 @@ public interface ConnectionListener {
 	public String		update();
 	public PlayerState	getState();
 	public boolean		pause();
+	public boolean		unpause();
 	public boolean		stop();
 	public boolean		play(String filename);
 }
