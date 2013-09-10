@@ -8,5 +8,7 @@
 			<attribute name="javadoc_location" value="file:/home/tom/Programming/RemoteMusicPlayerServer/lib/java-audio-player-v.0.1.1.2/docs/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/cookswing-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/cookxml-3.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
