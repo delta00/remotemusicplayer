@@ -2,6 +2,9 @@ package application;
 
 import java.io.IOException;
 
+import application.controller.Controller;
+import application.controller.ControllerErrorListener;
+
 import tools.communicator.Communicator;
 import tools.communicator.ConnectionDescriptor;
 import tools.communicator.ConnectionListener;
@@ -9,81 +12,25 @@ import tools.communicator.PlayerState;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		final Communicator communicator = new Communicator();
+		final Controller controller = new Controller();
 		
-		communicator.setConnectionListener(new ConnectionListener() {
+		controller.setErrorListener(new ControllerErrorListener() {
 			@Override
-			public String update() {
-				System.out.println("Update.");
-				return "<musicLibrary></musicLibrary>";
-			}
-			
-			@Override
-			public boolean stop() {
-				System.out.println("Stop.");
-				return true;
-			}
-			
-			@Override
-			public void setActiveConnection(ConnectionDescriptor connectionDescriptor) {
-				System.out.printf("Aktivni pripojeni: %s\n", connectionDescriptor);
-			}
-			
-			@Override
-			public boolean play(String filename) {
-				System.out.printf("Hrat: %s\n", filename);
-				return true;
-			}
-			
-			@Override
-			public boolean pause() {
-				System.out.println("Pause.");
-				return true;
-			}
-			
-			@Override
-			public PlayerState getState() {
-				System.out.println("Get state");
-				return new PlayerState(false, "Sybreed", "Slave design", "Bioactive", 320, 60);
-			}
-			
-			@Override
-			public boolean checkVersion(long version) {
-				System.out.printf("check %d\n", version);
-				return false;
-			}
-			
-			@Override
-			public boolean authenticate(String device, String password) {
-				System.out.printf("autorizace: \"%s\", \"%s\"\n", device, password);
-				return false;
-			}
-
-			@Override
-			public void close() {
-				System.out.println("spojeni uzavreno");
-			}
-
-			@Override
-			public void invalidCommand() {
-				System.out.println("Invalid command");
+			public void addIOException(IOException exception) {
+				System.err.println("Something goes horribly wrong! Trying again in 3 seconds...");
+				
+				try {
+					Thread.currentThread().sleep(3000);
+				} catch (InterruptedException e) {
+				}
+				
+				controller.run();
 			}
 		});
+
+		controller.run();
 		
-		Thread communicatorThread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					communicator.run();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		};
-		
-		communicatorThread.start();
-		
+		// Communicator usage
 /*		System.out.println("MAIN: Cekam...");
 		Thread.currentThread().sleep(15000);
 		
