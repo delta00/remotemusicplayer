@@ -2,12 +2,23 @@ package application;
 
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
+
 import application.controller.Controller;
 import application.controller.ControllerErrorListener;
+import application.gui.MainWindow;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		final Controller controller = new Controller();
+		SwingUtilities.invokeLater(new Runnable(){
+			@Override
+			public void run() {
+				new MainWindow();
+			}
+		});
+		
+		// Controller usage
+/*		final Controller controller = new Controller();
 		
 		controller.setErrorListener(new ControllerErrorListener() {
 			@Override
@@ -23,7 +34,7 @@ public class Main {
 			}
 		});
 
-		controller.run();
+		controller.run();*/
 		
 		// Communicator usage
 /*		System.out.println("MAIN: Cekam...");
