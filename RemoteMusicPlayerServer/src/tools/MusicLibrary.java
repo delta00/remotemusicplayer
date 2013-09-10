@@ -3,12 +3,16 @@ package tools;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -18,6 +22,7 @@ import org.farng.mp3.TagException;
 import org.farng.mp3.id3.ID3v1;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * <p>
@@ -47,7 +52,7 @@ import org.w3c.dom.Element;
  * 		</ul>
  * </p>
  * 
- * @author		Tomáš Zíma
+ * @author		Tom���� Z��ma
  * @see			#buildLibrary(File)
  * @see			#buildXML()
  * @see			#serialize(String)
@@ -572,5 +577,62 @@ public class MusicLibrary {
 		this.artists		= new ArrayList<>();
 		this.xmlDocument	= null;
 		this.version		= 0;
+	}
+
+	/**
+	 * Loads number of version from file with serialized music library.
+	 * 
+	 * @param filename
+	 * 	Full qualified name (including path) of the XML file with music library.
+	 *  
+	 * @return
+	 * 	Version of the music library.
+	 * 
+	 * @throws ParserConfigurationException
+	 * 	Internal error. See Javadoc to the exception for more informations.
+	 * 
+	 * @throws IOException
+	 * 	File couldn't be found or isn't readable. Check path and permissions.
+	 * 	 
+	 * @throws SAXException
+	 * 	XML file is corrupted and couldn't be parsed.
+	 */
+	public static long fastLoadID(String filename) throws ParserConfigurationException, IOException, SAXException {
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+		Document document = documentBuilder.parse(filename);
+		
+		return Long.valueOf(
+			document.
+				getElementsByTagName("musicLibrary").
+					item(0).
+						getAttributes().
+							getNamedItem("version").
+								getNodeValue()
+		);
+	}
+	
+	/**
+	 * Loads content of file and returns it as a string.
+	 * 
+	 * @param filename
+	 * 	Path to the file.
+	 * 
+	 * @return
+	 * 	Content of the file.
+	 * 
+	 * @throws FileNotFoundException
+	 * 	File was not found.
+	 * 
+	 * @throws IOException
+	 * 	File couldn't be loaded.
+	 */
+	public static String fastLoadContent(String filename) throws FileNotFoundException, IOException {
+		FileInputStream stream = new FileInputStream(new File(filename));
+		
+		byte[] content = new byte[stream.available()];
+		stream.read(content);
+		stream.close();
+		
+		return new String(content);
 	}
 }
