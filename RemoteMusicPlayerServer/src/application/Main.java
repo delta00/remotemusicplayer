@@ -1,8 +1,13 @@
 package application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+
+import cookxml.cookswing.CookSwing;
 
 import application.controller.Controller;
 import application.controller.ControllerErrorListener;
@@ -10,12 +15,10 @@ import application.gui.MainWindow;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		SwingUtilities.invokeLater(new Runnable(){
-			@Override
-			public void run() {
-				new MainWindow();
-			}
-		});
+		CookSwing cookSwing = new CookSwing(new MainWindow());
+		cookSwing.render("res/gui/MainWindow.xml").setVisible(true);
+		
+//		((JLabel) cookSwing.getId("myString").object).setText("HELLO WORLD!");
 		
 		// Controller usage
 /*		final Controller controller = new Controller();

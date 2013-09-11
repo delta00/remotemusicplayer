@@ -1,0 +1,39 @@
+<frame title="RemoteMusicPlayer :: Server" size="500,250" defaultcloseoperation="EXIT_ON_CLOSE">
+	<menubar>
+		<menu text="Network">
+			<menu text="Server">
+				<menuitem text="Start" />
+				<menuitem text="Stop"/>
+			</menu>
+			<menuitem text="Configuration" actionlistener="menuNetworkConfiguration" />
+		</menu>
+		<menu text="Media">
+			<menu text="Music library">
+				<menuitem text="Build" />
+				<menuitem text="Update" />
+			</menu>
+			<menuitem text="Configuration" />
+		</menu>
+		<menu text="Devices">
+			<menuitem text="Manage" />
+		</menu>
+		<menu text="Help">
+			<menuitem text="About" />
+		</menu>
+	</menubar>
+<!-- 	<panel>
+		<panel><label text="File" /><textfield columns="15" editable="false" /></panel>
+		<panel><label text="Artist" /><textfield columns="15" editable="false" /></panel>
+		<panel><label text="Album" /><textfield columns="15" editable="false" /></panel>
+		<panel><label text="Song" /><textfield columns="15" editable="false" /></panel>
+	</panel> -->
+	<panel>
+		<!-- <label text="Hello, world!" id="myString" /> -->
+		<springgridlayout rows="2" columns="2" hgap="5" vgap="5" initialx="5" initialy="5">
+			<button text="1" />
+			<button text="2" />
+			<button text="3" />
+			<button text="4" />
+		</springgridlayout>
+	</panel>
+</frame>
