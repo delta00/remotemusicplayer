@@ -1,7 +1,7 @@
 package tools.communicator;
 
 /**
- * Logic-pure class, which contains informations about current state of the
+ * Logic-poor class, which contains informations about current state of the
  * player.
  * 
  * @author Tomáš Zíma
