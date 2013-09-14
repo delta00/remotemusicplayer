@@ -11,6 +11,7 @@ public class PlayerState {
 	private String	artist		= "";
 	private String	album		= "";
 	private String	song		= "";
+	private String	file		= "";
 	private long	length		= 0;
 	private long	position	= 0;
 	
@@ -36,11 +37,12 @@ public class PlayerState {
 	 * @param position
 	 * 	Current position in the song in seconds.
 	 */
-	public PlayerState(boolean playing, String artist, String album, String song, long length, long position) {
+	public PlayerState(boolean playing, String artist, String album, String song, String file, long length, long position) {
 		this.playing	= playing;
 		this.artist		= artist;
 		this.album		= album;
 		this.song		= song;
+		this.file		= file;
 		this.length		= length;
 		this.position	= position;
 	}
@@ -83,6 +85,14 @@ public class PlayerState {
 	 */
 	public String getSong() {
 		return song;
+	}
+	
+	/**
+	 * @return
+	 * 	Fully qualified name of the file.
+	 */
+	public String getFile() {
+		return file;
 	}
 
 	/**
