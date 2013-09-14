@@ -368,7 +368,8 @@ public class Communicator {
 	 * Checks if there are some opened connections between server and clients.
 	 * 
 	 * @return
-	 * 	True: yes, there are some opened connections, false: no, there are not
+	 * 	True: yes, there are some opened connections (at least one),
+	 * 	false: no, there are not
 	 */
 	public boolean hasOpenedConnection() {
 		for (Thread handlerThread : handlerThreadsList) {
@@ -378,6 +379,22 @@ public class Communicator {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @return
+	 * 	Count of opened (active) connections.
+	 */
+	public int getConnectionsCount() {
+		int result = 0;
+		
+		for (Thread handlerThread : handlerThreadsList) {
+			if (handlerThread.isAlive()) {
+				result++;
+			}
+		}
+		
+		return result;
 	}
 	
 	/**
