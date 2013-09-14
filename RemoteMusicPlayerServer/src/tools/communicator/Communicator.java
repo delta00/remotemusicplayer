@@ -84,7 +84,7 @@ import java.util.regex.Pattern;
  * 	</p>
  * </p>
  * 
- * @author	Tom���� Z��ma
+ * @author	Tomáš Zíma
  * @see		ConnectionListener
  * @see		ConnectionHandler
  * @see		ConnectionDescriptor
@@ -134,7 +134,7 @@ public class Communicator {
 	 * is used for communication, was described in the Javadoc for class
 	 * {@link Communicator} as well as some other details.
 	 * 
-	 * @author Tom���� Z��ma
+	 * @author Tomáš Zíma
 	 */
 	protected class ConnectionHandler {
 		/** Socket between server and client. */
