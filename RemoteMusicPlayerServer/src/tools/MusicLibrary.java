@@ -52,7 +52,7 @@ import org.xml.sax.SAXException;
  * 		</ul>
  * </p>
  * 
- * @author		Tom���� Z��ma
+ * @author		Tomáš Zíma
  * @see			#buildLibrary(File)
  * @see			#buildXML()
  * @see			#serialize(String)
