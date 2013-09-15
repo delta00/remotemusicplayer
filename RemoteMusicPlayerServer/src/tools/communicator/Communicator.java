@@ -10,8 +10,12 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import application.controller.OnChangeListener;
 
 /**
  * <p>
@@ -128,6 +132,9 @@ public class Communicator {
 	/** Number of TCP port to listen on. */
 	private int					tcpListenPort		= 9999;
 	
+	/** This listener will be triggered, if something changes. */
+	private OnChangeListener	onChangeListener	= null;
+	
 	/**
 	 * This class takes care of actual connection between server and one client.
 	 * It reads commands, triggers listener and sends replies. Protocol, which
@@ -165,13 +172,21 @@ public class Communicator {
 		 *	couldn't be finished successfully.
 		 */
 		public ConnectionHandler(Socket socket, ConnectionDescriptor connectionDescriptor) throws IOException {
+			// Save values
 			this.socket					= socket;
 			this.connectionDescriptor	= connectionDescriptor;
 			
+			// Create objects for reading and writing
 			this.reader					= new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			this.writer					= new DataOutputStream(socket.getOutputStream()); 
 			
+			// Set timeout for reading (will block only for limited amount of time)
 			this.socket.setSoTimeout(READER_TIMEOUT);
+			
+			// Trigger listener (new connection)
+			if (onChangeListener != null) {
+				onChangeListener.onChange();
+			}
 		}
 		
 		/**
@@ -247,7 +262,7 @@ public class Communicator {
 					continue;
 				} catch (IOException | NullPointerException e) {
 					connectionListener.close();
-					return;
+					break;
 				}
 			}
 		}
@@ -325,7 +340,31 @@ public class Communicator {
 				Thread handlerThread = new Thread() {
 					@Override
 					public void run() {
+						// Execute loop, which will take care of communication between
+						// server and (one) client.
 						connectionHandler.run();
+
+						// We need to let the OnChangeListener know, connection was
+						// closed. In the moment, when this code is executed, connection
+						// still exists, so it's not possible to just call "onChange()"
+						// method (the result would be invalid value in the GUI).
+						//
+						// This is the best solution I could think of. OnChangeListener
+						// will not be triggered immediately, but will be delayed using
+						// timer.
+						//
+						// WARNING: The value 100ms MIGHT NOT BE the best value and it
+						// may cause problems on slower computer. If GUI is not showing
+						// correct informations on some computer, increase this value!
+						new Timer().schedule(new TimerTask() {
+							@Override
+							public void run() {
+								// Trigger listener (connection closed)
+								if (onChangeListener != null) {
+									onChangeListener.onChange();
+								}
+							}
+						}, 100);
 					}
 				};
 				
@@ -335,6 +374,11 @@ public class Communicator {
 				
 				// Delete all threads which are not active anymore
 				removeFinishedThreads();
+				
+				// Trigger listener (new connection)
+				if (onChangeListener != null) {
+					onChangeListener.onChange();
+				}
 			} catch (SocketTimeoutException e) {
 				continue;
 			}
@@ -350,6 +394,11 @@ public class Communicator {
 		
 		// Close server socket.
 		serverSocket.close();
+		
+		// Trigger listener (all connections closed)
+		if (onChangeListener != null) {
+			onChangeListener.onChange();
+		}
 	}
 	
 	/**
@@ -433,5 +482,13 @@ public class Communicator {
 		}
 		
 		return result;
+	}
+	
+	/**
+	 * @param onChangeListener
+	 * 	Sets listener, which will be triggered, if something changes.
+	 */
+	public void setOnChangeListener(OnChangeListener onChangeListener) {
+		this.onChangeListener = onChangeListener;
 	}
 }
