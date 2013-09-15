@@ -110,4 +110,20 @@ public class PlayerState {
 	public long getPosition() {
 		return position;
 	}
+	
+	/**
+	 * @param playing
+	 * 	True: plays, false: doesn't play
+	 */
+	public void setPlaying(boolean playing) {
+		this.playing = playing;
+	}
+	
+	/**
+	 * @param position
+	 * 	Current position in the song (in seconds).
+	 */
+	public void setPosition(long position) {
+		this.position = position;
+	}
 }
