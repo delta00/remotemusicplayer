@@ -10,7 +10,7 @@ package tools.communicator;
  * 	generated the command.
  * </p>
  * 
- * @author Tom���� Z��ma
+ * @author Tomáš Zíma
  */
 public interface ConnectionListener {
 	public void			setActiveConnection(ConnectionDescriptor connectionDescriptor);
