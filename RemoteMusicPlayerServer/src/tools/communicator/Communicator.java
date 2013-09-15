@@ -265,6 +265,13 @@ public class Communicator {
 					break;
 				}
 			}
+
+			// Close connection (client will be disconnected)
+			try {
+				socket.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/**
