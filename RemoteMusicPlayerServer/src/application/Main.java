@@ -1,22 +1,14 @@
 package application;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.swing.JLabel;
-import javax.swing.SwingUtilities;
-
-import cookxml.cookswing.CookSwing;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import application.controller.Controller;
-import application.controller.ControllerErrorListener;
 import application.gui.MainWindow;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
-		CookSwing cookSwing = new CookSwing(new MainWindow());
-		cookSwing.render("res/gui/MainWindow.xml").setVisible(true);
+		new MainWindow(new Controller());
 		
 //		((JLabel) cookSwing.getId("myString").object).setText("HELLO WORLD!");
 		

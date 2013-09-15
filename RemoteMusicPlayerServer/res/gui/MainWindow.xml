@@ -1,39 +1,43 @@
-<frame title="RemoteMusicPlayer :: Server" size="500,250" defaultcloseoperation="EXIT_ON_CLOSE">
+<frame title="RemoteMusicPlayer :: Server" size="500,250" defaultcloseoperation="EXIT_ON_CLOSE" locationrelativeto="null">
 	<menubar>
 		<menu text="Network">
 			<menu text="Server">
-				<menuitem text="Start" />
-				<menuitem text="Stop"/>
+				<menuitem text="Start" actionlistener="buttonNetworkServerStart" id="networkServerStart" visible="false" />
+				<menuitem text="Stop"  actionlistener="buttonNetworkServerStop" id="networkServerStop" />
 			</menu>
-			<menuitem text="Configuration" actionlistener="menuNetworkConfiguration" />
+			<menuitem text="Configuration" actionlistener="buttonNetworkConfiguration" />
 		</menu>
 		<menu text="Media">
 			<menu text="Music library">
-				<menuitem text="Build" />
-				<menuitem text="Update" />
+				<menuitem text="Build" actionlistener="buttonMediaMusicLibraryBuild" />
+				<menuitem text="Update" actionlistener="buttonMediaMusicLibraryUpdate" />
 			</menu>
-			<menuitem text="Configuration" />
+			<menu text="Player">
+				<menuitem text="Play" actionlistener="buttonMediaPlayerPlay" />
+				<menuitem text="Pause" actionlistener="buttonMediaPlayerPause" />
+				<menuitem text="Stop" actionlistener="buttonMediaPlayerStop" />
+			</menu>
+			<menuitem text="Configuration" actionlistener="buttonMediaConfiguration"/>
 		</menu>
 		<menu text="Devices">
-			<menuitem text="Manage" />
+			<menuitem text="Manage" actionlistener="buttonDevicesManage" />
 		</menu>
 		<menu text="Help">
-			<menuitem text="About" />
+			<menuitem text="About" actionlistener="buttonHelpAbout" />
 		</menu>
 	</menubar>
-<!-- 	<panel>
-		<panel><label text="File" /><textfield columns="15" editable="false" /></panel>
-		<panel><label text="Artist" /><textfield columns="15" editable="false" /></panel>
-		<panel><label text="Album" /><textfield columns="15" editable="false" /></panel>
-		<panel><label text="Song" /><textfield columns="15" editable="false" /></panel>
-	</panel> -->
 	<panel>
-		<!-- <label text="Hello, world!" id="myString" /> -->
-		<springgridlayout rows="2" columns="2" hgap="5" vgap="5" initialx="5" initialy="5">
-			<button text="1" />
-			<button text="2" />
-			<button text="3" />
-			<button text="4" />
-		</springgridlayout>
+		<gridlayout rows="1" columns="1">
+				<panel>
+					<gridlayout columns="2">
+						<scrollpane>
+							<textpane id="playerState" contenttype="text/html" editable="false" />
+						</scrollpane>
+						<scrollpane>
+							<textpane id="serverInfo" contenttype="text/html" editable="false" />
+						</scrollpane>
+					</gridlayout>
+				</panel>
+		</gridlayout>
 	</panel>
 </frame>

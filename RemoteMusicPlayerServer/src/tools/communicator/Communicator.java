@@ -201,6 +201,10 @@ public class Communicator {
 				try {
 					// Read one line from client ("\n" will be dropped out!).
 					String command = reader.readLine();
+					
+					if (command == null) {
+						continue;
+					}
 
 					// Ensure, that any other thread is accessing the
 					// connectionListener this time.
@@ -260,7 +264,7 @@ public class Communicator {
 					}
 				} catch (SocketTimeoutException e) {
 					continue;
-				} catch (IOException | NullPointerException e) {
+				} catch (IOException e) {
 					connectionListener.close();
 					break;
 				}
@@ -271,6 +275,10 @@ public class Communicator {
 				socket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
+			}
+			
+			if (connectionListener != null) {
+				connectionListener.close();
 			}
 		}
 		
