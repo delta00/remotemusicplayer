@@ -202,11 +202,25 @@ public class Communicator {
 					// Read one line from client ("\n" will be dropped out!).
 					String command = reader.readLine();
 					
+					// If readLine() returned null, it means that client closed
+					// the connection.
 					if (command == null) {
+						// Close the socket.
 						socket.close();
 						
+						// Let the connection listener know, that connection
+						// was closed.
+						synchronized (connectionListener) {
+							if (connectionListener != null) {
+								connectionListener.setActiveConnection(connectionDescriptor);
+								connectionListener.close();
+							}
+						}
+						
+						// Let the thread die and after 100ms, trigger the
+						// OnChangeListener. It cannot be triggered immediately,
+						// because thread will be still living that time.
 						new Timer().schedule(new TimerTask(){
-							
 							@Override
 							public void run() {
 								if (onChangeListener != null) {
@@ -215,6 +229,7 @@ public class Communicator {
 							}
 						}, 100);
 						
+						// Exit loop (thread)
 						return;
 					}
 
