@@ -1,0 +1,9 @@
+<frame title="NetworkConfiguration" size="250,125">
+	<panel>
+		<label text="TCP port number: " />
+		<textfield text="9999" id="fieldPortNumber" columns="8" />
+		
+		<button text='Cancel' id="buttonCancel" actionlistener="buttonCancel" />
+		<button text="Save" id="buttonSave" actionlistener="buttonSave" />
+	</panel>
+</frame>

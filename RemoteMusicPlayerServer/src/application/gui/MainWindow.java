@@ -69,7 +69,7 @@ public class MainWindow implements OnChangeListener, ControllerErrorListener {
 	public ActionListener	buttonNetworkConfiguration		= new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("network configuration");
+			new NetworkConfiguration(controller);
 		}
 	};
 
