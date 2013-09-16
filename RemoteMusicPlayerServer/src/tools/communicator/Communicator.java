@@ -292,8 +292,6 @@ public class Communicator {
 			if (connectionListener != null) {
 				connectionListener.close();
 			}
-			
-			ThreadDestroyer.killMe();
 		}
 		
 		/**
