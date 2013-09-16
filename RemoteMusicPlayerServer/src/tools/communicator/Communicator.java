@@ -203,7 +203,19 @@ public class Communicator {
 					String command = reader.readLine();
 					
 					if (command == null) {
-						continue;
+						socket.close();
+						
+						new Timer().schedule(new TimerTask(){
+							
+							@Override
+							public void run() {
+								if (onChangeListener != null) {
+									onChangeListener.onChange();
+								}
+							}
+						}, 100);
+						
+						return;
 					}
 
 					// Ensure, that any other thread is accessing the
@@ -280,6 +292,8 @@ public class Communicator {
 			if (connectionListener != null) {
 				connectionListener.close();
 			}
+			
+			ThreadDestroyer.killMe();
 		}
 		
 		/**
