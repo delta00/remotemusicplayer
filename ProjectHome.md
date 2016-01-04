@@ -1,0 +1,1 @@
+Goal of this project is to develop Android and desktop applications, which will together allow user to use his phone as an remote control to play music on the computer.
